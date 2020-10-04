@@ -1,8 +1,8 @@
 <template>
   <div class="userInfo">
-    <nav-bar></nav-bar>
+    <nav-bar :userDetail="infoDetail" pagecome="userinfo"></nav-bar>
     <img src="@/assets/bannerTop_new.png" alt="" class="backcard">
-    <user-one></user-one>
+    <user-one :userDetail="infoDetail"></user-one>
     
   </div>
 </template>
@@ -15,11 +15,17 @@ export default {
       navBar,
       userOne
   },
+  data(){
+    return {
+      infoDetail:{}
+    }
+  },
   methods:{
     async getUserInfo(){
         let id = localStorage.getItem('id');       
         const res = await this.$axios.get('/user/'+id);
-        console.log(res);
+        this.infoDetail =res.data[0];
+        
      }
   },
   created(){

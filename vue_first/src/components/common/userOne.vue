@@ -1,7 +1,9 @@
 <template>
   <div class="person-info">
         <div class="left">
-            <img src="@/assets/head_img.jpg" alt="" class="backcard">
+            <img :src="userDetail.user_img" v-if='userDetail.user_img' alt="" class="backcard">
+            <img src="@/assets/head_img.jpg" v-else alt="" class="backcard">
+
         </div>
         <div class="right">
           <div class="top">
@@ -18,7 +20,7 @@
               <span>获赞</span>
             </p>
           </div>
-          <div class="foot">
+          <div class="foot" @click="$router.push('/edit')">
             <div>编辑资料</div>
           </div>
         </div>
@@ -28,6 +30,7 @@
 
 <script>
 export default {
+  props:['userDetail']
 
 }
 </script>

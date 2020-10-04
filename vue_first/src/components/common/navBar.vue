@@ -8,7 +8,8 @@
       输入内容    
   </div>
   <div class="barright">
-  <img src="../../assets/default_img.jpg" alt="">
+  <img :src="userDetail.user_img" v-if='userDetail.user_img' @click="gojump" alt="">
+  <img src="../../assets/default_img.jpg" v-else  @click="gojump" alt="">
   <div>下载APP</div>
   </div>
   </div>
@@ -16,7 +17,16 @@
 
 <script>
 export default {
- 
+  props:['userDetail','pagecome'],
+  methods:{
+      gojump(){
+         if(this.pagecome === 'edit'){
+            console.log('就在编辑页面');
+         }else{
+             this.$router.push('/edit')
+         }
+      }
+  }
 }
 </script>
 
@@ -61,7 +71,7 @@ export default {
         img{
             width: 6.667vw;
             height: 6.667vw;
-
+            border-radius: 3.333vw;
         }
         div{
             font-size: 3.333vw;

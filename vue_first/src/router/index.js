@@ -3,8 +3,14 @@ import VueRouter from 'vue-router'
 import register from '@/views/register.vue'
 import Login from '@/views/login.vue' 
 import userInfo from '@/views/userInfo.vue'
+import edit from '@/views/edit.vue'
+import Home from '@/views/Home.vue'
 Vue.use(VueRouter)
 const routes =[
+    {
+        path:'/Home',
+        component:Home
+    },
     {
         path:'/login',
         component:Login
@@ -19,6 +25,13 @@ const routes =[
         meta:{
             isToken:true
         }
+    },
+    {
+        path:'/edit',
+        component:edit,
+        meta:{
+            isToken:true
+        }
     }
 ]
 const router = new VueRouter({
@@ -26,7 +39,6 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach((to, from, next) => { 
-    console.log(to);    
    if(!localStorage.getItem('id') && !localStorage.getItem('token') && to.meta.isToken==true){
        router.push('/login') 
        Vue.prototype.$msg("请重新登录")
