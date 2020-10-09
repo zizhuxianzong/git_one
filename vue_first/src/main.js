@@ -5,6 +5,7 @@ import Vant from 'vant';
 import 'vant/lib/index.css';
 import http from './use_axios';
 import { Toast } from 'vant';
+import '@/assets/style.css'
 Vue.use(Vant);
 
 Vue.prototype.$axios=http;

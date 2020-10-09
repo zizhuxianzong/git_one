@@ -1,6 +1,6 @@
 <template>
   <div class="navBar">
-  <div class="barleft">
+  <div class="barleft"  @click="gofirst">
       <img src="../../assets/logo.png" alt="">
   </div>
   <div class="barmiddle">
@@ -25,8 +25,13 @@ export default {
          }else{
              this.$router.push('/edit')
          }
-      }
+      },
+      gofirst(){
+     if(this.pagecome !== 'home'){        
+             this.$router.push('/')
+         }  
   }
+  },
 }
 </script>
 

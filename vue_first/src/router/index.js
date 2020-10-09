@@ -5,11 +5,15 @@ import Login from '@/views/login.vue'
 import userInfo from '@/views/userInfo.vue'
 import edit from '@/views/edit.vue'
 import Home from '@/views/Home.vue'
+import acticleEvery from '@/components/common/acticleEvery.vue'
 Vue.use(VueRouter)
 const routes =[
     {
-        path:'/Home',
-        component:Home
+        path:'/',
+        component:Home,
+        meta:{
+            keepAlive:true
+        }
     },
     {
         path:'/login',
@@ -32,6 +36,10 @@ const routes =[
         meta:{
             isToken:true
         }
+    },
+    {
+        path:'/acticleEvery/:id',
+        component:acticleEvery
     }
 ]
 const router = new VueRouter({
