@@ -29,7 +29,7 @@ export default {
     },
     registerSubmit(){
       if(this.name && this.userName && this.passWord){
-         this.$axios.post('/register',{
+         this.$axios.bli.register({
            name:this.name,
            username:this.userName,
            password:this.passWord,

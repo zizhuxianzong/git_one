@@ -21,11 +21,10 @@ export default {
     }
   },
   methods:{
-    async getUserInfo(){
-        let id = localStorage.getItem('id');       
-        const res = await this.$axios.get('/user/'+id);
-        this.infoDetail =res.data[0];
-        
+     async getUserInfo(){
+        let id = localStorage.getItem('id');         
+        const res = await this.$axios.bli.user(id);
+        this.infoDetail =res.data[0];      
      }
   },
   created(){

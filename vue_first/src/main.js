@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 import Vant from 'vant';
 import 'vant/lib/index.css';
-import http from './use_axios';
+import api from './api/index';
 import { Toast } from 'vant';
 import '@/assets/style.css'
 Vue.use(Vant);
 
-Vue.prototype.$axios=http;
+Vue.prototype.$axios=api;
 Vue.prototype.$msg=Toast;
 
 new Vue({

@@ -67,18 +67,18 @@ export default {
   methods:{
    async getEditinfo(){       
         let id = localStorage.getItem('id');       
-        let res = await this.$axios.get('/user/'+id);
+        let res = await this.$axios.bli.user(id);
         this.userInfos = res.data[0];    
     },
     async afterRead(file){
         let formdata = new FormData();
         formdata.append('file',file.file);
-        const res = await this.$axios.post('./upload',formdata);
+        const res = await this.$axios.bli.upload(formdata);
         this.userInfos.user_img = res.data.url;
         this.updateInfo();
     },
     async updateInfo(){
-      const res = await this.$axios.post('/update/'+ localStorage.getItem('id'),this.userInfos);
+      const res = await this.$axios.bli.update(localStorage.getItem('id'),this.userInfos);
      if(res.data.code ===200){
          this.$msg.fail("修改成功")
      }
