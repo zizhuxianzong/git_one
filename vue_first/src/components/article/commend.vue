@@ -26,6 +26,7 @@
 </template>
 
 <script>
+//一级评论组件
 import commentItem from "./commentItem";
 export default {
     
@@ -59,8 +60,8 @@ export default {
        return fn(null);
     },
     publishClick(id) {
-     this.$emit('publishClick',id)
-    }
+      this.$emit('publishClick',id)
+     }
   },
   created() {
     this.commentData();

@@ -14,12 +14,13 @@
         <div v-if="!temp">{{item.comment_content}} <span class="publish" @click="PostItemcomment(item.comment_id)">回复</span></div>
         <div v-else>回复 <span style="color:#478ef0">{{item.parent_user_info.name}}</span> :{{item.comment_content}}<span class="publish" @click="PostItemcomment(item.comment_id)">回复</span></div>
       </div>
-      <commentchild-item :commentChild="item.child" :temp="true"></commentchild-item>
+      <commentchild-item :commentChild="item.child" :temp="true" @postChild="postChild" ></commentchild-item>
     </div>
   </div>
 </template>
 
 <script>
+//二级以及后面的评论组件
 export default {
   name:'commentchildItem',
   props: ["commentChild",'temp'],

@@ -6,6 +6,7 @@ import userInfo from '@/views/userInfo.vue'
 import edit from '@/views/edit.vue'
 import Home from '@/views/Home.vue'
 import acticleEvery from '@/components/common/acticleEvery.vue'
+import tabitemEdit from '@/components/common/tabitemEdit.vue'
 Vue.use(VueRouter)
 const routes =[
     {
@@ -40,6 +41,10 @@ const routes =[
     {
         path:'/acticleEvery/:id',
         component:acticleEvery
+    },
+    {
+        path:'/tabitemEdit',
+        component:tabitemEdit
     }
 ]
 const router = new VueRouter({

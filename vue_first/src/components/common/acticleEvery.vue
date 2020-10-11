@@ -47,9 +47,10 @@
       </div>
       <commend-title
        :dataLength="lens"
+       ref="commendzujian"
        @Postcomment="PostSuccess"
        />      
-      <commend @lengthselect="len => lens = len" /> 
+      <commend @lengthselect="len => lens = len" @publishClick="publishMsg" ref="commendpublish" /> 
     </div>
   </div>
 </template>
@@ -95,16 +96,78 @@ export default {
     async getArticleData() {
       let res = await this.$axios.get("/article/" + this.$route.params.id);
       this.model = res.data[0];
+      if(this.model){
+        this.subscriptCheck();
+      }
     },
     //获取推荐文章
     async commendData() {
       const res = await this.$axios.get("/commend");
       this.commendList = res.data;
     },
-    collectionClick(){},
-    subscriptClick(){
-
+    //从子组件的子组件接受的参数
+    publishMsg(id){
+     console.log(id);
+     this.postComment.parent_id = id;
+     this.$refs.commendzujian.focusIpt();
+    },
+    //点击收藏
+    async collectionClick(){
+      if(localStorage.getItem('token')){
+        //如果是登录用户就可以收藏
+        let res = await this.$axios.post('/collection/'+localStorage.getItem('id'),{article_id:this.$route.params.id});      
+        if(res.data.msg =="收藏成功"){
+           this.collectionActive = true;
+        }else{
+             this.collectionActive = false;
+        }
+         this.$msg.success(res.data.msg)
+      }else{
+       this.$msg.fail('请登录')
+      }
+    },
+    //进入页面首先判断下是否收藏
+    async collectionCheck(){
+      if(localStorage.getItem('token')){
+        //如果是登录用户就可以收藏
+        let res = await this.$axios.get('/collection/'+localStorage.getItem('id'),{
+          params:{
+            article_id:this.$route.params.id
+          }
+        });      
+           this.collectionActive = res.data.success;         
+        
+      }
+    },
+    //关注当前用户
+    async subscriptClick(){
+      if(localStorage.getItem('token')){
+        //如果是登录用户就可以收藏
+        let res = await this.$axios.post('/sub_scription/'+localStorage.getItem('id'),{sub_id:this.model.userinfo.id});      
+        if(res.data.msg =="关注成功"){
+           this.subscritionActive = true;
+           this.$msg.success('已关注')
+        }else{
+             this.subscritionActive = false;
+             this.$msg.success('已取消关注')
+        }
+      }else{
+       this.$msg.fail('请登录')
+      }
     }, 
+     //进入页面首先判断下是否关注
+    async subscriptCheck(){
+      if(localStorage.getItem('token')){
+        //如果是登录用户就可以收藏
+        let res = await this.$axios.get('/sub_scription/'+localStorage.getItem('id'),{
+          params:{
+            sub_id:this.model.userinfo.id
+          }
+        });      
+           this.subscritionActive = res.data.success;         
+        
+      }
+    },
     async PostSuccess(data){
      this.postComment.comment_content = data;
      var all = new Date();
@@ -119,10 +182,11 @@ export default {
      let str = m+'-'+d;
      this.postComment.comment_date = str; 
      this.postComment.article_id = this.$route.params.id;   
-     console.log(this.postComment);
      const res = await this.$axios.post('/comment_post/' + localStorage.getItem('id'),this.postComment);
      if(res.status == 200) {
-          this.$msg.fail('评论发表成功')
+          this.$msg.success('评论发表成功')
+          this.$refs.commendpublish.commentData();
+          this.parent_id=null;
          }
     },
   },
@@ -130,12 +194,15 @@ export default {
       $route(){
          this.getArticleData();
          this.commendData();
+         this.collectionCheck();
+         
       }
   },
   created() {
     this.getinfousers();
     this.getArticleData();
     this.commendData();
+    this.collectionCheck();  
   },
 };
 </script>
