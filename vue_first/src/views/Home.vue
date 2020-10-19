@@ -49,7 +49,7 @@ export default {
     async getinfousers() {
       let id = localStorage.getItem("id");
       if (id) {
-        let res = await this.$axios.get("/user/" + id);
+        let res = await this.$axios.bli.user(id);
         this.model = res.data[0];
       }
     },
@@ -59,7 +59,7 @@ export default {
       let data = JSON.parse(localStorage.getItem("newCat"));
         this.categoryChange(data);           
       }else{
-      let res = await this.$axios.get("/category");
+      let res = await this.$axios.bli.category();
        this.categoryChange(res.data); 
       }
       this.selectArtical();
@@ -83,7 +83,7 @@ export default {
     async selectArtical() {
       //获取每一个tab栏目下需要展示的详细信息
       let categoryobj = this.categoryItem();
-      let res = await this.$axios.get("/detail/" + categoryobj._id, {
+      let res = await this.$axios.bli.detail(categoryobj._id, {
         params: {
           page: categoryobj.page,
           pagesize: categoryobj.pagesize,

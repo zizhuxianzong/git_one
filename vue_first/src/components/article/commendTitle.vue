@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     async myUserinfo() {
-      const res = await this.$axios.get("/user/" + localStorage.getItem("id"));
+      const res = await this.$axios.bli.user(localStorage.getItem("id"));
       this.myuser = res.data[0];
     },
     cmmentPublish() {

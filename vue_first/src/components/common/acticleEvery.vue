@@ -88,13 +88,13 @@ export default {
     async getinfousers() {
       let id = localStorage.getItem("id");
       if(id){
-         let res = await this.$axios.get("/user/" + id);
+         let res = await this.$axios.bli.user(id);
          this.article = res.data[0];
       }
     },
     //获取视频的信息
     async getArticleData() {
-      let res = await this.$axios.get("/article/" + this.$route.params.id);
+      let res = await this.$axios.bli.article(this.$route.params.id);
       this.model = res.data[0];
       if(this.model){
         this.subscriptCheck();
@@ -102,7 +102,7 @@ export default {
     },
     //获取推荐文章
     async commendData() {
-      const res = await this.$axios.get("/commend");
+      const res = await this.$axios.bli.commend();
       this.commendList = res.data;
     },
     //从子组件的子组件接受的参数
@@ -115,7 +115,7 @@ export default {
     async collectionClick(){
       if(localStorage.getItem('token')){
         //如果是登录用户就可以收藏
-        let res = await this.$axios.post('/collection/'+localStorage.getItem('id'),{article_id:this.$route.params.id});      
+        let res = await this.$axios.post.bli.collection(localStorage.getItem('id'),{article_id:this.$route.params.id});      
         if(res.data.msg =="收藏成功"){
            this.collectionActive = true;
         }else{
@@ -130,7 +130,7 @@ export default {
     async collectionCheck(){
       if(localStorage.getItem('token')){
         //如果是登录用户就可以收藏
-        let res = await this.$axios.get('/collection/'+localStorage.getItem('id'),{
+        let res = await this.$axios.bli.collectionCheck(localStorage.getItem('id'),{
           params:{
             article_id:this.$route.params.id
           }
@@ -142,8 +142,8 @@ export default {
     //关注当前用户
     async subscriptClick(){
       if(localStorage.getItem('token')){
-        //如果是登录用户就可以收藏
-        let res = await this.$axios.post('/sub_scription/'+localStorage.getItem('id'),{sub_id:this.model.userinfo.id});      
+        //如果是登录用户就可以关注
+        let res = await this.$axios.bli.sub_scription(localStorage.getItem('id'),{sub_id:this.model.userinfo.id});      
         if(res.data.msg =="关注成功"){
            this.subscritionActive = true;
            this.$msg.success('已关注')
@@ -158,8 +158,8 @@ export default {
      //进入页面首先判断下是否关注
     async subscriptCheck(){
       if(localStorage.getItem('token')){
-        //如果是登录用户就可以收藏
-        let res = await this.$axios.get('/sub_scription/'+localStorage.getItem('id'),{
+        //如果是登录用户就可以关注
+        let res = await this.$axios.bli.sub_scription(localStorage.getItem('id'),{
           params:{
             sub_id:this.model.userinfo.id
           }
@@ -182,7 +182,7 @@ export default {
      let str = m+'-'+d;
      this.postComment.comment_date = str; 
      this.postComment.article_id = this.$route.params.id;   
-     const res = await this.$axios.post('/comment_post/' + localStorage.getItem('id'),this.postComment);
+     const res = await this.$axios.bli.comment_post(localStorage.getItem('id'),this.postComment);
      if(res.status == 200) {
           this.$msg.success('评论发表成功')
           this.$refs.commendpublish.commentData();

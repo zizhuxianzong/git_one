@@ -50,12 +50,12 @@ export default {
     async getinfousers() {
       let id = localStorage.getItem("id");
       if (id) {
-        let res = await this.$axios.get("/user/" + id);
+        let res = await this.$axios.bli.user(id);
         this.userinfo = res.data[0];
       }
     },
     async SelectCategory() {
-      const res = await this.$axios.get("/category");
+      const res = await this.$axios.bli.category();
       this.newCat = res.data;
     },
     handleCategoryClick(index) {

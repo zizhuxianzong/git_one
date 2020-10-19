@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     async commentData() {
-      const res = await this.$axios.get("/comment/" + this.$route.params.id);
+      const res = await this.$axios.bli.comment(this.$route.params.id);
       if(res.data){
         this.$emit('lengthselect',res.data.length)
       }
